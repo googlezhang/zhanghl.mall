@@ -1,0 +1,1 @@
+call mvn.bat eclipse:eclipse -Dmaven.test.skip=true -Dwtpversion=1.0
