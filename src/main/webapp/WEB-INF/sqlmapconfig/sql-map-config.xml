@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMapConfig PUBLIC "-//iBATIS.com//DTD SQL Map Config 2.0//EN"
+    "http://www.ibatis.com/dtd/sql-map-config-2.dtd">
+<sqlMapConfig>
+	<settings cacheModelsEnabled="true" enhancementEnabled="true"
+		lazyLoadingEnabled="true" errorTracingEnabled="true" maxRequests="32"
+		maxSessions="10" maxTransactions="5" useStatementNamespaces="true" />
+	<!-- java pet store -->
+	<sqlMap
+		resource="org/springframework/samples/jpetstore/dao/ibatis/maps/Account.xml" />
+	<sqlMap
+		resource="org/springframework/samples/jpetstore/dao/ibatis/maps/Category.xml" />
+	<sqlMap
+		resource="org/springframework/samples/jpetstore/dao/ibatis/maps/Product.xml" />
+	<sqlMap
+		resource="org/springframework/samples/jpetstore/dao/ibatis/maps/Item.xml" />
+	<sqlMap
+		resource="org/springframework/samples/jpetstore/dao/ibatis/maps/Order.xml" />
+	<sqlMap
+		resource="org/springframework/samples/jpetstore/dao/ibatis/maps/LineItem.xml" />
+	<sqlMap
+		resource="org/springframework/samples/jpetstore/dao/ibatis/maps/Sequence.xml" />
+	<!-- com.zhanghl.mall -->
+	<sqlMap resource="com/zhanghl/mall/dao/ibatis/maps/Enterprise.xml" />
+	<sqlMap resource="com/zhanghl/mall/dao/ibatis/maps/Person.xml" />
+	<sqlMap resource="com/zhanghl/mall/dao/ibatis/maps/Student.xml" />
+</sqlMapConfig>

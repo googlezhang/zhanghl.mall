@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="student" >
+  <resultMap id="StudentResult" class="com.zhanghl.mall.domain.member.Student" >
+    <result column="id" property="id" jdbcType="INTEGER" />
+    <result column="username" property="username" jdbcType="VARCHAR" />
+    <result column="password" property="password" jdbcType="VARCHAR" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="recommended_by" property="recommendedBy" jdbcType="VARCHAR" />
+    <result column="school_Id" property="schoolId" jdbcType="INTEGER" />
+    <result column="subscribe" property="subscribe" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Student_Example_Where_Clause" >
+    <iterate property="oredCriteria" conjunction="or" prepend="where" removeFirstPrepend="iterate" >
+      <isEqual property="oredCriteria[].valid" compareValue="true" >
+        (
+        <iterate prepend="and" property="oredCriteria[].criteriaWithoutValue" conjunction="and" >
+          $oredCriteria[].criteriaWithoutValue[]$
+        </iterate>
+        <iterate prepend="and" property="oredCriteria[].criteriaWithSingleValue" conjunction="and" >
+          $oredCriteria[].criteriaWithSingleValue[].condition$
+            #oredCriteria[].criteriaWithSingleValue[].value#
+        </iterate>
+        <iterate prepend="and" property="oredCriteria[].criteriaWithListValue" conjunction="and" >
+          $oredCriteria[].criteriaWithListValue[].condition$
+          <iterate property="oredCriteria[].criteriaWithListValue[].values" open="(" close=")" conjunction="," >
+            #oredCriteria[].criteriaWithListValue[].values[]#
+          </iterate>
+        </iterate>
+        <iterate prepend="and" property="oredCriteria[].criteriaWithBetweenValue" conjunction="and" >
+          $oredCriteria[].criteriaWithBetweenValue[].condition$
+          #oredCriteria[].criteriaWithBetweenValue[].values[0]# and
+          #oredCriteria[].criteriaWithBetweenValue[].values[1]#
+        </iterate>
+        )
+      </isEqual>
+    </iterate>
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="StudentResult" parameterClass="com.zhanghl.mall.domain.member.Student" >
+    select id, username, password, email, recommended_by, school_Id, subscribe
+    from student
+    where id = #id:INTEGER#
+  </select>
+  <select id="selectByExample" resultMap="StudentResult" parameterClass="com.zhanghl.mall.domain.member.criteria.StudentCriteria" >
+    select id, username, password, email, recommended_by, school_Id, subscribe
+    from student
+    <isParameterPresent >
+      <include refid="Student_Example_Where_Clause" />
+      <isNotNull property="orderByClause" >
+        order by $orderByClause$
+      </isNotNull>
+    </isParameterPresent>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterClass="com.zhanghl.mall.domain.member.Student" >
+    delete from student
+    where id = #id:INTEGER#
+  </delete>
+  <delete id="deleteByExample" parameterClass="com.zhanghl.mall.domain.member.criteria.StudentCriteria" >
+    delete from student
+    <include refid="Student_Example_Where_Clause" />
+  </delete>
+  <insert id="insert" parameterClass="com.zhanghl.mall.domain.member.Student" >
+    <selectKey resultClass="java.lang.Integer" keyProperty="id" type="post" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into student (username, password, email, recommended_by, school_Id, subscribe)
+    values (#username:VARCHAR#, #password:VARCHAR#, #email:VARCHAR#, #recommendedBy:VARCHAR#,
+      #schoolId:INTEGER#, #subscribe:CHAR#)
+  </insert>
+  <update id="updateByPrimaryKey" parameterClass="com.zhanghl.mall.domain.member.Student" >
+    update student
+    set username = #username:VARCHAR#,
+      password = #password:VARCHAR#,
+      email = #email:VARCHAR#,
+      recommended_by = #recommendedBy:VARCHAR#,
+      school_Id = #schoolId:INTEGER#,
+      subscribe = #subscribe:CHAR#
+    where id = #id:INTEGER#
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterClass="com.zhanghl.mall.domain.member.Student" >
+    update student
+    <dynamic prepend="set" >
+      <isNotNull prepend="," property="username" >
+        username = #username:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="password" >
+        password = #password:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="email" >
+        email = #email:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="recommendedBy" >
+        recommended_by = #recommendedBy:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="schoolId" >
+        school_Id = #schoolId:INTEGER#
+      </isNotNull>
+      <isNotNull prepend="," property="subscribe" >
+        subscribe = #subscribe:CHAR#
+      </isNotNull>
+    </dynamic>
+    where id = #id:INTEGER#
+  </update>
+  <select id="countByExample" parameterClass="com.zhanghl.mall.domain.member.criteria.StudentCriteria" resultClass="java.lang.Integer" >
+    select count(*) from student
+    <include refid="Student_Example_Where_Clause" />
+  </select>
+  <update id="updateByExampleSelective" >
+    update student
+    <dynamic prepend="set" >
+      <isNotNull prepend="," property="record.id" >
+        id = #record.id:INTEGER#
+      </isNotNull>
+      <isNotNull prepend="," property="record.username" >
+        username = #record.username:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="record.password" >
+        password = #record.password:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="record.email" >
+        email = #record.email:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="record.recommendedBy" >
+        recommended_by = #record.recommendedBy:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="record.schoolId" >
+        school_Id = #record.schoolId:INTEGER#
+      </isNotNull>
+      <isNotNull prepend="," property="record.subscribe" >
+        subscribe = #record.subscribe:CHAR#
+      </isNotNull>
+    </dynamic>
+    <isParameterPresent >
+      <include refid="Student_Example_Where_Clause" />
+    </isParameterPresent>
+  </update>
+  <update id="updateByExample" >
+    update student
+    set id = #record.id:INTEGER#,
+      username = #record.username:VARCHAR#,
+      password = #record.password:VARCHAR#,
+      email = #record.email:VARCHAR#,
+      recommended_by = #record.recommendedBy:VARCHAR#,
+      school_Id = #record.schoolId:INTEGER#,
+      subscribe = #record.subscribe:CHAR#
+    <isParameterPresent >
+      <include refid="Student_Example_Where_Clause" />
+    </isParameterPresent>
+  </update>
+</sqlMap>

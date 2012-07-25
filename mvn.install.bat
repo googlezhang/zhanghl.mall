@@ -1,0 +1,1 @@
+call mvn.bat install -Dmaven.test.skip=true -DdownloadSources=true

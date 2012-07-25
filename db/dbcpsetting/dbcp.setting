@@ -1,0 +1,24 @@
+#### 是否在自动回收超时连接的时候打印连接的超时错误   
+dbcp.logAbandoned=true
+#### 是否自动回收超时连接   
+dbcp.removeAbandoned=true
+#### 超时时间(以秒数为单位)   
+dbcp.removeAbandonedTimeout=150
+# false : 空闲时是否验证, 若不通过断掉连接, 前提是空闲对象回收器开启状态   
+dbcp.testWhileIdle = true
+# -1 : 以毫秒表示空闲对象回收器由运行间隔。值为负数时表示不运行空闲对象回收器   
+# 若需要回收, 该值最好小于 minEvictableIdleTimeMillis 值   
+dbcp.timeBetweenEvictionRunsMillis = 300000
+# 1000*60*30 : 被空闲对象回收器回收前在池中保持空闲状态的最小时间, 毫秒表示   
+# 若需要回收, 该值最好小于DB中的 wait_timeout 值  
+dbcp.minEvictableIdleTimeMillis = 300000
+# 测试sql
+dbcp.validationQuery = SELECT 1
+# timeBetweenEvictionRunsMillis毫秒秒检查一次连接池中空闲的连接,
+# 把空闲时间超过minEvictableIdleTimeMillis毫秒的连接断开,
+# 直到连接池中的连接数到minIdle为止 
+# minEvictableIdleTimeMillis,removeAbandonedTimeout这两个参数针对的连接对象不一样,
+# minEvictableIdleTimeMillis针对连接池中的连接对象,
+# removeAbandonedTimeout针对未被close的活动连接.
+# 最大活跃链接数
+dbcp.maxActive = 20

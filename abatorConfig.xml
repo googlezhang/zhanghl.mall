@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE abatorConfiguration PUBLIC "-//Apache Software Foundation//DTD Abator for iBATIS Configuration 1.0//EN" "http://ibatis.apache.org/dtd/abator-config_1_0.dtd" >
+<abatorConfiguration >
+  <abatorContext id="mytest">
+  <property name="suppressTypeWarnings" value="true"/>
+  <commentGenerator type="com.zhanghl.mall.abator.MyCommentGenerator"/>
+    <jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://localhost:3306/jpetstore" userId="root" password="3304828" >
+      <classPathEntry location="C:\Users\googlezhang\.m2\repository\mysql\mysql-connector-java\5.1.18\mysql-connector-java-5.1.18.jar" />
+    </jdbcConnection>
+    <javaModelGenerator targetPackage="com.zhanghl.mall.domain.user" targetProject="org.springframework.samples.jpetstore" />
+    <sqlMapGenerator targetPackage="com.zhanghl.mall.dao.ibatis.maps" targetProject="org.springframework.samples.jpetstore">
+    </sqlMapGenerator>
+    <daoGenerator targetPackage="com.zhanghl.mall.dao.ibatis" targetProject="org.springframework.samples.jpetstore" type="SPRING" />
+    <table schema="jpetstore" tableName="enterprise" >
+    	<property name="useColumnIndexes" value="false"/>
+      	<generatedKey column="id" sqlStatement="MYSQL" identity="true" type="post"/>
+    </table>
+    <table schema="jpetstore" tableName="person" >
+      <generatedKey column="id" sqlStatement="MYSQL" identity="true" type="post"/>
+    </table>
+    <table schema="jpetstore" tableName="student" >
+      <generatedKey column="id" sqlStatement="MYSQL" identity="true" type="post"/>
+    </table>
+  </abatorContext>
+</abatorConfiguration>

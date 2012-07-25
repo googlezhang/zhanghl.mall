@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<entry key="com.zhanghl.mall.validation.username.NotEmpty.message">请输入用户名</entry>
+	<entry key="com.zhanghl.mall.validation.username.Size.message">用户名长度只能在4-20位字符之间</entry>
+	<entry key="registration.captcha">验证码错误</entry>
+	<entry key="PASSWORD_NOT_MATCH">两次输入密码不一致</entry>
+</properties>

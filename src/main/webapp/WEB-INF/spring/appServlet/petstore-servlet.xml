@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- - DispatcherServlet application context for the Spring web MVC - implementation 
+	of JPetStore's web tier. -->
+<!-- <beans:beans xmlns="http://www.springframework.org/schema/beans:beans" -->
+<!-- xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" -->
+<!-- xsi:schemaLocation="http://www.springframework.org/schema/beans:beans 
+	http://www.springframework.org/schema/beans:beans/spring-beans:beans-3.1.xsd"> -->
+<beans:beans xmlns="http://www.springframework.org/schema/mvc"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:p="http://www.springframework.org/schema/p" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
+        http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.1.xsd">
+	<!-- spring mvc -->
+
+	<!-- DispatcherServlet Context: defines this servlet's request-processing 
+		infrastructure -->
+
+	<!-- Enables the Spring MVC @Controller programming model -->
+	<annotation-driven validator="validator" />
+
+	<!-- Enable controller method level security -->
+	<security:global-method-security
+		pre-post-annotations="enabled" />
+
+	<!-- Handles HTTP GET requests for /resources/** by efficiently serving 
+		up static resources in the ${webappRoot}/resources directory -->
+	<resources location="/, classpath:/META-INF/web-resources/"
+		mapping="/resources/**" />
+	<!-- 静态资源访问 -->
+	<resources location="/images/" mapping="/images/**" />
+	<resources location="/css/" mapping="/css/**" />
+
+	<!-- Allows for mapping the DispatcherServlet to "/" by forwarding static 
+		resource requests to the container's default Servlet -->
+	<!-- 开启此项 就会找不到 /shop/editAccount.do -->
+	<!-- <default-servlet-handler/> -->
+
+	<context:component-scan base-package="com.zhanghl.mall.web.spring.controller" />
+	<context:component-scan base-package="com.zhanghl.mall.formobject.validator" />
+
+	<!-- register "global" interceptor beans to apply to all registered HandlerMappings -->
+	<interceptors>
+		<beans:bean
+			class="org.springframework.web.servlet.theme.ThemeChangeInterceptor" />
+		<beans:bean
+			class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor"
+			p:paramName="lang" />
+	</interceptors>
+
+	<!-- Resolves localized messages*.properties and application.properties 
+		files in the application to allow for internationalization. The messages*.properties 
+		files translate messages, the application.properties resource bundle localizes 
+		all application specific messages such as entity names and menu items. -->
+	<!-- 同时支持xml形式的properties -->
+	<beans:bean
+		class="org.springframework.context.support.ReloadableResourceBundleMessageSource"
+		id="messageSource"
+		p:basenames="WEB-INF/i18n/messages,WEB-INF/i18n/application,WEB-INF/i18n/xml/messages"
+		p:fallbackToSystemLocale="false" />
+
+	<!-- store preferred language configuration in a cookie -->
+	<beans:bean class="org.springframework.web.servlet.i18n.CookieLocaleResolver"
+		id="localeResolver" p:cookieName="locale" />
+
+	<!-- resolves localized <theme_name>.properties files in the classpath to 
+		allow for theme support -->
+	<beans:bean
+		class="org.springframework.ui.context.support.ResourceBundleThemeSource"
+		id="themeSource" />
+
+	<!-- store preferred theme configuration in a cookie -->
+	<beans:bean class="org.springframework.web.servlet.theme.CookieThemeResolver"
+		id="themeResolver" p:cookieName="theme" p:defaultThemeName="standard" />
+
+	<beans:bean id="validator"
+		class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
+		<beans:property name="validationMessageSource" ref="messageSource" />
+	</beans:bean>
+
+	<!-- Enable file upload functionality -->
+	<beans:bean
+		class="org.springframework.web.multipart.support.StandardServletMultipartResolver"
+		id="multipartResolver" />
+
+	<!-- Tiles Configuration -->
+	<beans:bean id="tilesViewResolver"
+		class="org.springframework.web.servlet.view.UrlBasedViewResolver">
+		<beans:property name="viewClass"
+			value="org.springframework.web.servlet.view.tiles2.TilesView" />
+	</beans:bean>
+
+	<beans:bean id="tilesConfigurer"
+		class="org.springframework.web.servlet.view.tiles2.TilesConfigurer">
+		<beans:property name="definitions">
+			<beans:list>
+				<beans:value>/WEB-INF/layouts/layouts.xml</beans:value>
+				<!-- Scan views directory for Tiles configurations -->
+				<beans:value>/WEB-INF/views/**/views.xml</beans:value>
+			</beans:list>
+		</beans:property>
+	</beans:bean>
+
+	<!-- JCaptcha 验证码组件-->
+	<beans:bean class="com.octo.captcha.service.image.DefaultManageableImageCaptchaService" id="imageCaptchaService"/>
+
+	<!-- 老的配置 -->
+	<!-- ========================= VIEW DEFINITIONS ========================= -->
+
+	<beans:bean id="viewResolver"
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<beans:property name="viewClass"
+			value="org.springframework.web.servlet.view.JstlView" />
+		<beans:property name="prefix" value="/WEB-INF/jsp/spring/" />
+		<beans:property name="suffix" value=".jsp" />
+	</beans:bean>
+
+
+	<!-- ========================= DEFINITIONS OF PUBLIC CONTROLLERS ========================= -->
+
+	<beans:bean id="defaultHandlerMapping"
+		class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping" />
+
+	<beans:bean name="/shop/addItemToCart.do"
+		class="org.springframework.samples.jpetstore.web.spring.AddItemToCartController">
+		<beans:property name="petStore" ref="petStore" />
+	</beans:bean>
+
+	<beans:bean name="/shop/checkout.do"
+		class="org.springframework.samples.jpetstore.web.spring.ViewCartController">
+		<beans:property name="successView" value="Checkout" />
+	</beans:bean>
+
+	<beans:bean name="/shop/index.do"
+		class="org.springframework.web.servlet.mvc.ParameterizableViewController">
+		<beans:property name="viewName" value="index" />
+	</beans:bean>
+	
+	<!-- zhanghl mall register form -->
+
+	<beans:bean name="/mall/registPersonal.htm"
+		class="org.springframework.samples.jpetstore.web.spring.AccountFormController">
+		<beans:property name="petStore" ref="petStore" />
+		<beans:property name="validator" ref="accountValidator" />
+		<beans:property name="successView" value="index" />
+	</beans:bean>
+
+	<beans:bean name="/shop/newAccount.do"
+		class="org.springframework.samples.jpetstore.web.spring.AccountFormController">
+		<beans:property name="petStore" ref="petStore" />
+		<beans:property name="validator" ref="accountValidator" />
+		<beans:property name="successView" value="index" />
+	</beans:bean>
+
+	<beans:bean name="/shop/removeItemFromCart.do"
+		class="org.springframework.samples.jpetstore.web.spring.RemoveItemFromCartController" />
+
+	<beans:bean name="/shop/signoff.do"
+		class="org.springframework.samples.jpetstore.web.spring.SignoffController" />
+
+	<beans:bean name="/shop/searchProducts.do"
+		class="org.springframework.samples.jpetstore.web.spring.SearchProductsController">
+		<beans:property name="petStore" ref="petStore" />
+	</beans:bean>
+
+	<beans:bean name="/shop/signon.do"
+		class="org.springframework.samples.jpetstore.web.spring.SignonController">
+		<beans:property name="petStore" ref="petStore" />
+	</beans:bean>
+
+	<beans:bean name="/shop/signonForm.do"
+		class="org.springframework.web.servlet.mvc.ParameterizableViewController">
+		<beans:property name="viewName" value="SignonForm" />
+	</beans:bean>
+
+	<beans:bean name="/shop/updateCartQuantities.do"
+		class="org.springframework.samples.jpetstore.web.spring.UpdateCartQuantitiesController" />
+
+	<beans:bean name="/shop/viewCart.do"
+		class="org.springframework.samples.jpetstore.web.spring.ViewCartController">
+		<beans:property name="successView" value="Cart" />
+	</beans:bean>
+
+	<beans:bean name="/shop/viewCategory.do"
+		class="org.springframework.samples.jpetstore.web.spring.ViewCategoryController">
+		<beans:property name="petStore" ref="petStore" />
+	</beans:bean>
+
+	<beans:bean name="/shop/viewItem.do"
+		class="org.springframework.samples.jpetstore.web.spring.ViewItemController">
+		<beans:property name="petStore" ref="petStore" />
+	</beans:bean>
+
+	<beans:bean name="/shop/viewProduct.do"
+		class="org.springframework.samples.jpetstore.web.spring.ViewProductController">
+		<beans:property name="petStore" ref="petStore" />
+	</beans:bean>
+
+
+	<!-- ========================= DEFINITIONS OF PROTECTED CONTROLLERS ========================= -->
+
+	<beans:bean id="secureHandlerMapping"
+		class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<beans:property name="interceptors">
+			<beans:list>
+				<beans:ref bean="signonInterceptor" />
+			</beans:list>
+		</beans:property>
+		<beans:property name="urlMap">
+			<beans:map>
+				<beans:entry key="/shop/editAccount.do" value-ref="secure_editAccount" />
+				<beans:entry key="/shop/listOrders.do" value-ref="secure_listOrders" />
+				<beans:entry key="/shop/newOrder.do" value-ref="secure_newOrder" />
+				<beans:entry key="/shop/viewOrder.do" value-ref="secure_viewOrder" />
+			</beans:map>
+		</beans:property>
+	</beans:bean>
+
+	<beans:bean id="signonInterceptor"
+		class="org.springframework.samples.jpetstore.web.spring.SignonInterceptor" />
+
+	<beans:bean id="secure_editAccount"
+		class="org.springframework.samples.jpetstore.web.spring.AccountFormController">
+		<beans:property name="petStore" ref="petStore" />
+		<beans:property name="validator" ref="accountValidator" />
+		<beans:property name="successView" value="index" />
+	</beans:bean>
+
+	<beans:bean id="secure_listOrders"
+		class="org.springframework.samples.jpetstore.web.spring.ListOrdersController">
+		<beans:property name="petStore" ref="petStore" />
+	</beans:bean>
+
+	<beans:bean id="secure_newOrder"
+		class="org.springframework.samples.jpetstore.web.spring.OrderFormController">
+		<beans:property name="petStore" ref="petStore" />
+		<beans:property name="validator" ref="orderValidator" />
+	</beans:bean>
+
+	<beans:bean id="secure_viewOrder"
+		class="org.springframework.samples.jpetstore.web.spring.ViewOrderController">
+		<beans:property name="petStore" ref="petStore" />
+	</beans:bean>
+
+</beans:beans>
