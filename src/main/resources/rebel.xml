@@ -3,14 +3,14 @@
 	xmlns="http://www.zeroturnaround.com"
 	xsi:schemaLocation="http://www.zeroturnaround.com http://www.zeroturnaround.com/alderaan/rebel-2_0.xsd">
 	<classpath>
-		<dir name="D:\work\testrun_20120305_zhang\target\classes">
+		<dir name="G:\zhanghl.mall.github\target\classes">
 		</dir>
-		<dir name="D:\work\testrun_20120305_zhang\src\main\webapp\WEB-INF">
+		<dir name="G:\zhanghl.mall.github\src\main\webapp\WEB-INF">
 		</dir>
 	</classpath>
 	<web>
 		<link target="/">
-			<dir name="D:\work\testrun_20120305_zhang\src\main\webapp" />
+			<dir name="G:\zhanghl.mall.github\src\main\webapp" />
 		</link>
 	</web>
 </application>
