@@ -103,12 +103,6 @@
   <update id="updateByExampleSelective" >
     update person
     <dynamic prepend="set" >
-      <isNotNull prepend="," property="record.id" >
-        id = #record.id:INTEGER#
-      </isNotNull>
-      <isNotNull prepend="," property="record.username" >
-        username = #record.username:VARCHAR#
-      </isNotNull>
       <isNotNull prepend="," property="record.password" >
         password = #record.password:VARCHAR#
       </isNotNull>
@@ -128,9 +122,7 @@
   </update>
   <update id="updateByExample" >
     update person
-    set id = #record.id:INTEGER#,
-      username = #record.username:VARCHAR#,
-      password = #record.password:VARCHAR#,
+    set password = #record.password:VARCHAR#,
       email = #record.email:VARCHAR#,
       recommended_by = #record.recommendedBy:VARCHAR#,
       subscribe = #record.subscribe:CHAR#

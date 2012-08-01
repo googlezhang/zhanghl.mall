@@ -15,4 +15,6 @@
 		<put-attribute name="menu" value="/WEB-INF/views/menu.jsp" />
 		<put-attribute name="footer" value="/WEB-INF/views/footer.jsp" />
 	</definition>
+	<definition name="test" template="/WEB-INF/layouts/test.jsp">
+	</definition>
 </tiles-definitions>

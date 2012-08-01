@@ -32,6 +32,8 @@
 	<!-- 静态资源访问 -->
 	<resources location="/images/" mapping="/images/**" />
 	<resources location="/css/" mapping="/css/**" />
+	<resources location="/jslib/" mapping="/jslib/**" />
+	<resources location="/validate/" mapping="/validate/**" />
 
 	<!-- Allows for mapping the DispatcherServlet to "/" by forwarding static 
 		resource requests to the container's default Servlet -->

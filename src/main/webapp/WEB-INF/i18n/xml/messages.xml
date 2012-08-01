@@ -3,6 +3,13 @@
 <properties>
 	<entry key="com.zhanghl.mall.validation.username.NotEmpty.message">请输入用户名</entry>
 	<entry key="com.zhanghl.mall.validation.username.Size.message">用户名长度只能在4-20位字符之间</entry>
-	<entry key="registration.captcha">验证码错误</entry>
-	<entry key="PASSWORD_NOT_MATCH">两次输入密码不一致</entry>
+	<entry key="com.zhanghl.mall.validation.password.NotEmpty.message">请输入密码</entry>
+	<entry key="com.zhanghl.mall.validation.password.Size.message">密码长度只能在6-16位字符之间</entry>
+	<entry key="com.zhanghl.mall.validation.password.NotEqual.message">两次输入密码不一致</entry>
+	<entry key="com.zhanghl.mall.validation.email.NotEmpty.message">请输入邮箱</entry>
+	<entry key="com.zhanghl.mall.validation.email.Format.message">邮箱格式不正确</entry>
+	<entry key="com.zhanghl.mall.validation.email.Size.message">您填写的邮箱过长，邮件地址只能在50个字符以内</entry>
+	<entry key="com.zhanghl.mall.validation.recommendedBy.Size.message">推荐人用户名长度只能在4-20位字符之间</entry>
+	<entry key="com.zhanghl.mall.validation.captcha.NotEmpty.message">请输入验证码</entry>
+	<entry key="com.zhanghl.mall.validation.captcha.Error.message">验证码错误</entry>
 </properties>

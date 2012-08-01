@@ -1,8 +1,6 @@
 package com.zhanghl.mall.web.spring.controller.regist;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +17,8 @@ import com.octo.captcha.module.servlet.image.SimpleImageCaptchaServlet;
 import com.octo.captcha.service.CaptchaServiceException;
 import com.octo.captcha.service.multitype.MultiTypeCaptchaService;
 import com.zhanghl.mall.formobject.PersonForm;
-import com.zhanghl.mall.formobject.validator.RegistrationValidation;
+import com.zhanghl.mall.formobject.validator.PersonFormValidation;
+import com.zhanghl.mall.services.PersonRegistService;
 
 /**
  * 注册控制器 类RegistController.java的实现描述：包含个人用户注册，企业用户注册，和校园用户注册
@@ -33,13 +32,16 @@ public class RegistController {
     public static final String      FORM_NAME = "registrationForm";
 
     final Logger                    logger    = LoggerFactory.getLogger(RegistController.class);
+    
 
     @Autowired
     MessageSource                   messageSource;
     @Autowired
-    private RegistrationValidation  registrationValidation;
+    private PersonFormValidation  personFormValidation;
     @Autowired
     private MultiTypeCaptchaService captchaService;
+//    @Autowired
+//    private PersonRegistService personRegistService;
 
     @RequestMapping("/new/registpersonal.htm")
     public String RegistPersonal() {
@@ -65,14 +67,15 @@ public class RegistController {
     }
 
     @RequestMapping(value = "/new/registtest.htm", method = RequestMethod.POST)
-    public String processRegistration(@Valid
-    PersonForm personForm, BindingResult result, HttpServletRequest request) {
-        registrationValidation.validate(personForm, result);
-        // validateCaptcha(personForm, result, request.getSession().getId(), "registration.captcha");
-        validateCaptchaSimple(personForm, result, request, "registration.captcha");
+    public String processRegistration(PersonForm personForm, BindingResult result, HttpServletRequest request) {
+        personFormValidation.validate(personForm, result);
+        if (!result.hasFieldErrors("captcha")) {
+            validateCaptchaSimple(personForm, result, request, "com.zhanghl.mall.validation.captcha.Error.message");
+        }
         if (result.hasErrors()) {
             return "regist/registtest";
         }
+        //personRegistService.insertPerson(personForm);
         return "regist/registtest";
     }
 
@@ -81,10 +84,8 @@ public class RegistController {
         if (null != result.getFieldError("captcha")) return;
         boolean validCaptcha = false;
         try {
-            // validCaptcha = captchaService.validateResponseForID(sessionId, personForm.getCaptcha());
             validCaptcha = SimpleImageCaptchaServlet.validateResponse(request, personForm.getCaptcha());
         } catch (CaptchaServiceException e) {
-            // should not happen, may be thrown if the id is not valid
             logger.warn("validateCaptcha()", e);
         }
         if (!validCaptcha) {

@@ -3,18 +3,21 @@
 <tiles-definitions>
 	<definition extends="regist" name="regist/registpersonal">
 		<put-attribute name="title" value="注册-个人用户" />
-		<put-attribute name="body" value="/WEB-INF/views/regist/registpersonal.jsp" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/regist/registpersonal.jsp" />
 	</definition>
 	<definition extends="regist" name="regist/registcompany">
 		<put-attribute name="title" value="注册-企业用户" />
-		<put-attribute name="body" value="/WEB-INF/views/regist/registcompany.jsp" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/regist/registcompany.jsp" />
 	</definition>
 	<definition extends="regist" name="regist/registschool">
 		<put-attribute name="title" value="注册-校园用户" />
-		<put-attribute name="body" value="/WEB-INF/views/regist/registschool.jsp" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/regist/registschool.jsp" />
 	</definition>
-	<definition extends="regist" name="regist/registtest">
-		<put-attribute name="title" value="注册-测试用户" />
-		<put-attribute name="body" value="/WEB-INF/views/regist/registtest.jsp" />
+	<definition extends="test" name="regist/registtest">
+		<put-attribute name="body"
+			value="/WEB-INF/views/regist/registtest.jsp" />
 	</definition>
 </tiles-definitions>

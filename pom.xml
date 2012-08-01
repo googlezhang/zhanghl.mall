@@ -44,8 +44,22 @@
 		<!-- <org.aspectj-version>1.6.9</org.aspectj-version> -->
 		<commons-logging.version>1.1.1</commons-logging.version>
 		<jcaptcha.version>2.0-alpha-1</jcaptcha.version>
+		<struts2-spring-plugin.version>2.3.4</struts2-spring-plugin.version>
+		<struts2-core.version>2.3.4</struts2-core.version>
 	</properties>
 	<dependencies>
+		<!-- Struts 2 + Spring integration -->
+		<dependency>
+			<groupId>org.apache.struts</groupId>
+			<artifactId>struts2-spring-plugin</artifactId>
+			<version>${struts2-spring-plugin.version}</version>
+		</dependency>
+		<!-- Struts 2 -->
+		<dependency>
+			<groupId>org.apache.struts</groupId>
+			<artifactId>struts2-core</artifactId>
+			<version>${struts2-core.version}</version>
+		</dependency>
 		<dependency>
 			<groupId>com.octo.captcha</groupId>
 			<artifactId>jcaptcha</artifactId>
@@ -135,7 +149,6 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
-
 		<!-- Spring JavaScript Project -->
 		<dependency>
 			<groupId>org.springframework.webflow</groupId>

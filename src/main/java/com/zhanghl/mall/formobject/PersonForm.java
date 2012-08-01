@@ -1,7 +1,7 @@
 package com.zhanghl.mall.formobject;
 
+import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.NotEmpty;
-
 import com.zhanghl.mall.domain.member.Person;
 
 /**
@@ -11,9 +11,11 @@ import com.zhanghl.mall.domain.member.Person;
  */
 public class PersonForm extends Person {
 
-    @NotEmpty
+    @NotEmpty(message = "{com.zhanghl.mall.validation.password.NotEmpty.message}")
+    @Size(min = 6, max = 16, message = "{com.zhanghl.mall.validation.password.Size.message}")
     private String retypePassword;
-    @NotEmpty
+
+    @NotEmpty(message = "{com.zhanghl.mall.validation.captcha.NotEmpty.message}")
     private String captcha;
 
     public String getRetypePassword() {
